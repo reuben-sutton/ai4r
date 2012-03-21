@@ -94,7 +94,7 @@ module Ai4r
         @data_labels.each_with_index do |label,index|
           val = @values[index][data[index]]
           prob_map << ", " unless prob_map.length==0
-          prob_map << (label.to_s+"("+data[index]+") = " + ((@pcp[index][val][@klass_index[klass]])*100).round.to_s + "%")
+          prob_map << (label.to_s+"("+data[index].to_s+") = " + ((@pcp[index][val.to_i][@klass_index[klass]])*100).round.to_s + "%")
         end
         prob_map
       end
