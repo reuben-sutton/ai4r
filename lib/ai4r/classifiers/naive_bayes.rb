@@ -102,7 +102,7 @@ module Ai4r
       # and the conditional probabilities
       # Parameter data has to be an instance of CsvDataSet
       def build(data)
-        raise "Error instance must be passed" unless data.is_a?(DataSet)
+        raise "Error instance must be passed" unless data.is_a?(Ai4r::Data::DataSet)
         raise "Data should not be empty" if data.data_items.length == 0
 
         initialize_domain_data(data)
@@ -221,7 +221,8 @@ module Ai4r
       def count_instances
         @data_items.each do |item|
           @data_labels.each_with_index do |dl, dl_index|
-            @pcc[dl_index][value_index(item[dl_index], dl_index)][klass_index(item.klass)] += 1
+            #@pcc[dl_index][value_index(item[dl_index], dl_index)][klass_index(item.klass)] += 1
+            @pcc[dl_index][value_index(item[dl_index], dl_index).to_i][klass_index(item.klass).to_i] += 1
           end
         end
       end
