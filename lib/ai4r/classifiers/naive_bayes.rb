@@ -70,6 +70,35 @@ module Ai4r
         @values = {} # hashmap for quick lookup of all the values
       end
       
+      def inspect_everything
+        puts @class_counts.inspect
+        puts @class_prob.inspect
+        puts @pcc.inspect
+        puts @pcp.inspect
+        puts @klass_index.inspect
+        puts @values.inspect
+        puts @data_labels.inspect
+      end
+      
+      def get_probability_per_attribute(data, klass)
+        prob_map = {}
+        @data_labels.each_with_index do |label,index|
+          val = @values[index][data[index]]
+          prob_map[label.to_s+"-"+data[index]] = @pcp[index][val][@klass_index[klass]]
+        end
+        prob_map
+      end
+      
+      def get_probability_per_attribute_string(data, klass)
+        prob_map = ""
+        @data_labels.each_with_index do |label,index|
+          val = @values[index][data[index]]
+          prob_map << ", " unless prob_map.length==0
+          prob_map << (label.to_s+"("+data[index]+") = " + ((@pcp[index][val][@klass_index[klass]])*100).round.to_s + "%")
+        end
+        prob_map
+      end
+      
       # You can evaluate new data, predicting its category.
       # e.g.
       #   b.eval(["Red", "SUV", "Domestic"])
